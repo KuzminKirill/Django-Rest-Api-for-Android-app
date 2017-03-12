@@ -44,7 +44,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        fields = ('id','course_id', 'title', 'description', 'theory')
+        fields = ('id', 'course_id', 'title', 'description', 'theory')
 
 
 class TestSerializer(serializers.ModelSerializer):
