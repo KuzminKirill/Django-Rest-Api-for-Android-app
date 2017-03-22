@@ -40,7 +40,11 @@ class TestResultsSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    themes = serializers.StringRelatedField(many=True)
+    themes = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='theme-detail'
+    )
 
     class Meta:
         model = Course

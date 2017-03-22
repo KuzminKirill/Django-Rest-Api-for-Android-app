@@ -14,6 +14,9 @@ class Course(models.Model):
     class Meta:
         ordering = ('start_at',)
 
+    def __str__(self):
+        return self.name
+
 
 class Theme(models.Model):
     course_id = models.ForeignKey(Course, related_name='themes', on_delete=models.CASCADE)
