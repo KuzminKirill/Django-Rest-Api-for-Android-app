@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from apitry.serializers import UserSerializer, GroupSerializer
 from apitry.models import Course, Test, Theme
 from apitry.serializers import CourseSerializer, TestSerializer, ThemeSerializer
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -27,14 +28,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-class CoursesViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-
-
 class TestViewSet(viewsets.ModelViewSet):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
@@ -44,6 +37,13 @@ class ThemeViewSet(viewsets.ModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
 
+
+class CoursesViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
 
 #@api_view(['GET', 'POST'])
 #def course_list(request, format=None):

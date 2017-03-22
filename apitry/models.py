@@ -16,10 +16,21 @@ class Course(models.Model):
 
 
 class Theme(models.Model):
-    course_id = models.ForeignKey(Course)
+    course_id = models.ForeignKey(Course, related_name='themes', on_delete=models.CASCADE)
     title = models.TextField(max_length=20)
     description = models.TextField(max_length=100)
     theory = models.TextField()
+    order = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        unique_together = ('course_id', 'order')
+        ordering = ['order']
+
+    def __unicode__(self):
+        return '%d: %s' % (self.order, self.title)
 
 
 class UsersCourse(models.Model):
