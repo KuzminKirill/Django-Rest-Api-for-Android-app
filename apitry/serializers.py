@@ -1,6 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, UsersCourse
+import time
+
+
+class TimestampField(serializers.Field):
+    def to_representation(self, value):
+        return int(time.mktime(value.timetuple()))
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,13 +46,20 @@ class TestResultsSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    themes = serializers.HyperlinkedRelatedField(
+    themes = serializers.PrimaryKeyRelatedField(
         many=True,
         read_only=True,
-        view_name='theme-detail'
     )
+    tests = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
+    start = TimestampField(source="start_at")
+    finish = TimestampField(source="finish_at")
+    created = TimestampField(source="created_at")
 
     class Meta:
         model = Course
-        fields = ('id', 'start_at', 'finish_at', 'description', 'created_at', 'is_published', 'themes')
+        fields = ('id', 'start', 'finish', 'description', 'created', 'is_published', 'themes','tests')
 

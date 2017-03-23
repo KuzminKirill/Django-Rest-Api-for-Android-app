@@ -42,8 +42,16 @@ class UsersCourse(models.Model):
 
 
 class Test(models.Model):
-    course_id = models.ForeignKey(Course)
+    course_id = models.ForeignKey(Course, related_name='tests', on_delete=models.CASCADE)
     question = models.TextField()
+    order = models.IntegerField(default=1)
+
+    class Meta:
+        unique_together = ('course_id', 'order')
+        ordering = ['order']
+
+    def __unicode__(self):
+        return '%d: %s' % (self.order, self.question)
 
 
 class TestPossibleAnswers(models.Model):
