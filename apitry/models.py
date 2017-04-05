@@ -43,19 +43,32 @@ class UsersCourse(models.Model):
 
 class Test(models.Model):
     course_id = models.ForeignKey(Course, related_name='tests', on_delete=models.CASCADE)
-    question = models.TextField()
     order = models.IntegerField(default=1)
+    name = models.TextField()
 
     class Meta:
         unique_together = ('course_id', 'order')
         ordering = ['order']
 
     def __unicode__(self):
-        return '%d: %s' % (self.order, self.question)
+        return '%d: %s' % (self.order, self.name)
+
+
+class Question(models.Model):
+    test_id = models.ForeignKey(Test, related_name='questions', on_delete=models.CASCADE)
+    text = models.TextField()
+    order = models.IntegerField(default=1)
+
+    class Meta:
+        unique_together = ('test_id', 'order')
+        ordering = ['order']
+
+    def __unicode__(self):
+        return '%d: %s' % (self.order, self.text)
 
 
 class TestPossibleAnswers(models.Model):
-    test_id = models.ForeignKey(Test)
+    question_id = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE, default=1)
     answer = models.TextField()
     is_true = models.BooleanField()
 

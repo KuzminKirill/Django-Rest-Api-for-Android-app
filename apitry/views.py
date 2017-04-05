@@ -4,12 +4,13 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from apitry.serializers import UserSerializer, GroupSerializer
-from apitry.models import Course, Test, Theme
-from apitry.serializers import CourseSerializer, TestSerializer, ThemeSerializer
+from apitry.models import Course, Test, Theme, Question
+from apitry.serializers import CourseSerializer, TestSerializer, ThemeSerializer, QuestionSerializer
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics, permissions
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -44,6 +45,17 @@ class CoursesViewSet(viewsets.ModelViewSet):
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+
+#class UserDetail(generics.RetrieveAPIView):
+#    model = User
+#    serializer_class = UserSerializer
+#    lookup_field = 'username'
 
 #@api_view(['GET', 'POST'])
 #def course_list(request, format=None):
