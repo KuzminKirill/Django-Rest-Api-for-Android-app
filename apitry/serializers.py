@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, UsersCourse
+from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, UsersCourse, Question
 import time
 
 
 class TimestampField(serializers.Field):
+    def to_internal_value(self, data):
+        pass
+
     def to_representation(self, value):
         return int(time.mktime(value.timetuple()))
 
@@ -28,9 +31,25 @@ class ThemeSerializer(serializers.ModelSerializer):
 
 
 class TestSerializer(serializers.ModelSerializer):
+    questions = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
     class Meta:
         model = Test
-        fields = ('id', 'course_id', 'question')
+        fields = ('id', 'course_id', 'name', 'questions')
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
+    class Meta:
+        model = Question
+        fields = ('id', 'test_id', 'text', 'order', 'answers')
 
 
 class TestPossibleAnswersSerializer(serializers.ModelSerializer):
@@ -61,5 +80,5 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ('id', 'start', 'finish', 'description', 'created', 'is_published', 'themes','tests')
+        fields = ('id', 'start', 'finish', 'description', 'created', 'is_published', 'themes', 'tests')
 

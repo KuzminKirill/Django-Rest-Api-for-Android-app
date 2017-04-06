@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from apitry import views
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers
-from .views import CoursesViewSet, ThemeViewSet, TestViewSet, UserViewSet, GroupViewSet
+from .views import CoursesViewSet, ThemeViewSet, TestViewSet, UserViewSet, GroupViewSet, QuestionViewSet
 
 #urlpatterns = [
 #    url(r'^courses/$', views.course_list),
@@ -17,9 +17,10 @@ router.register(r'themes', ThemeViewSet)
 router.register(r'tests', TestViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
+router.register(r'questions', QuestionViewSet)
 
 #urlpatterns = [
-#    url(r'^', include('rest_framework_swagger.urls')),
+#    url(r'^/(?P<username>[0-9a-zA-Z_-]+)$', UserDetail.as_view(), name='user-detail'),
 #]
 
 urlpatterns = router.urls
