@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url, include
+from django.views.generic import RedirectView
 from rest_framework import routers
 from apitry import views
 from django.contrib import admin
@@ -32,6 +33,11 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^account/', include('allauth.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
 ]
 
 #if settings.DEBUG:

@@ -1,6 +1,6 @@
 .idea
 
-db.sqlite3
+
 
 *.egg-info
 *.pot
