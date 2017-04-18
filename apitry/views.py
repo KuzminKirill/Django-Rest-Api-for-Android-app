@@ -22,9 +22,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
@@ -33,18 +30,40 @@ class TestViewSet(viewsets.ModelViewSet):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
 
+    def list(self, request, *args, **kwargs):
+        response = super(TestViewSet, self).list(request, *args, **kwargs) # call the original 'list'
+        response.data = {"tests": response.data} # customize the response data
+        return response
+
 
 class ThemeViewSet(viewsets.ModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
 
+    def list(self, request, *args, **kwargs):
+        response = super(ThemeViewSet, self).list(request, *args, **kwargs) # call the original 'list'
+        response.data = {"themes": response.data} # customize the response data
+        return response
 
-class CoursesViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
+
+class CoursesList(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
+
+class CoursesDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+
+class CoursesViewSet(viewsets.ModelViewSet):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+    def list(self, request, *args, **kwargs):
+        response = super(CoursesViewSet, self).list(request, *args, **kwargs) # call the original 'list'
+        response.data = {"courses": response.data} # customize the response data
+        return response
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
