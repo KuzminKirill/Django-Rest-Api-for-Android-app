@@ -70,6 +70,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
+    def list(self, request, *args, **kwargs):
+        response = super(QuestionViewSet, self).list(request, *args, **kwargs)  # call the original 'list'
+        response.data = {"questions": response.data}  # customize the response data
+        return response
 
 #class UserDetail(generics.RetrieveAPIView):
 #    model = User
