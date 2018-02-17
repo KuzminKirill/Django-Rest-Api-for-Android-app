@@ -60,10 +60,10 @@ class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
-    def list(self, request, *args, **kwargs):
+    """def list(self, request, *args, **kwargs):
         response = super(CoursesViewSet, self).list(request, *args, **kwargs) # call the original 'list'
         response.data = {"courses": response.data} # customize the response data
-        return response
+        return response"""
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
