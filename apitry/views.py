@@ -1,16 +1,11 @@
-from django.shortcuts import render
-
 # Create your views here.
 from django.contrib.auth.models import User, Group
+from rest_framework import generics
 from rest_framework import viewsets
-from apitry.serializers import UserSerializer, GroupSerializer
+
 from apitry.models import Course, Test, Theme, Question
 from apitry.serializers import CourseSerializer, TestSerializer, ThemeSerializer, QuestionSerializer
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import generics, permissions
+from apitry.serializers import UserSerializer, GroupSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -31,8 +26,8 @@ class TestViewSet(viewsets.ModelViewSet):
     serializer_class = TestSerializer
 
     def list(self, request, *args, **kwargs):
-        response = super(TestViewSet, self).list(request, *args, **kwargs) # call the original 'list'
-        response.data = {"tests": response.data} # customize the response data
+        response = super(TestViewSet, self).list(request, *args, **kwargs)  # call the original 'list'
+        response.data = {"tests": response.data}  # customize the response data
         return response
 
 
@@ -41,8 +36,8 @@ class ThemeViewSet(viewsets.ModelViewSet):
     serializer_class = ThemeSerializer
 
     def list(self, request, *args, **kwargs):
-        response = super(ThemeViewSet, self).list(request, *args, **kwargs) # call the original 'list'
-        response.data = {"themes": response.data} # customize the response data
+        response = super(ThemeViewSet, self).list(request, *args, **kwargs)  # call the original 'list'
+        response.data = {"themes": response.data}  # customize the response data
         return response
 
 
@@ -60,10 +55,10 @@ class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
-    """def list(self, request, *args, **kwargs):
-        response = super(CoursesViewSet, self).list(request, *args, **kwargs) # call the original 'list'
-        response.data = {"courses": response.data} # customize the response data
-        return response"""
+    def list(self, request, *args, **kwargs):
+        response = super(CoursesViewSet, self).list(request, *args, **kwargs)  # call the original 'list'
+        response.data = {"courses": response.data}  # customize the response data
+        return response
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -75,13 +70,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
         response.data = {"questions": response.data}  # customize the response data
         return response
 
-#class UserDetail(generics.RetrieveAPIView):
+# class UserDetail(generics.RetrieveAPIView):
 #    model = User
 #    serializer_class = UserSerializer
 #    lookup_field = 'username'
 
-#@api_view(['GET', 'POST'])
-#def course_list(request, format=None):
+# @api_view(['GET', 'POST'])
+# def course_list(request, format=None):
 #    """
 #    List all courses, or create a new course.
 #    """
@@ -98,8 +93,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
 #        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-#@api_view(['GET', 'PUT', 'DELETE'])
-#def course_detail(request, pk, format=None):
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def course_detail(request, pk, format=None):
 #    """
 #    Retrieve, update or delete a course instance.
 #    """
@@ -122,4 +117,3 @@ class QuestionViewSet(viewsets.ModelViewSet):
 #    elif request.method == 'DELETE':
 #        course.delete()
 #        return Response(status=status.HTTP_204_NO_CONTENT)
-

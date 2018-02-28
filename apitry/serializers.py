@@ -1,7 +1,9 @@
+import time
+
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, UsersCourse, Question
-import time
+
+from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, Question
 
 
 class TimestampField(serializers.Field):
@@ -80,5 +82,5 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ('id', 'start', 'finish', 'description', 'created', 'is_published', 'themes', 'tests')
+        fields = ('name','id', 'start', 'finish', 'description', 'created', 'is_published', 'themes', 'tests')
 
