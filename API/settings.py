@@ -158,6 +158,6 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'logout',
 }
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.50', '192.168.1.37', '192.168.1.52']
+ALLOWED_HOSTS = ['localhost', '192.168.1.50', '192.168.1.37', '192.168.1.52', '192.168.1.213']
 
 
