@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from apitry.models import Course, Theme, Test, TestPossibleAnswers, TestResults, UsersCourse, Question
+from apitry.models import Course, Theme, Test, TestAnswer, TestResults, UsersCourse, Question
 import time
 
 
@@ -52,9 +52,9 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ('id', 'test_id', 'text', 'order', 'answers')
 
 
-class TestPossibleAnswersSerializer(serializers.ModelSerializer):
+class TestAnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestPossibleAnswers
+        model = TestAnswer
         fields = ('id', 'test_id', 'answer', 'is_true')
 
 
