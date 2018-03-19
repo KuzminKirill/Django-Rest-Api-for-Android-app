@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from apitry.models import Course, Theme, Test, TestAnswer, TestResults, UsersCourse, Question
+from apitry.models import Course, Theme, Test, TestAnswer, TestResults, UsersCourse, Question, Program, Module
 import time
 
 
@@ -81,4 +81,23 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'start', 'finish', 'description', 'created', 'is_published', 'themes', 'tests')
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+    courses = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True
+    )
+    start = TimestampField(source='start_date')
+    finish = TimestampField(source='finish_date')
+
+    class Meta:
+        model = Program
+        fields = ('id', 'start', 'finish', 'name')
+
+
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Module
+        fields = ('id', 'theme', 'id_test', 'id_task')
 
